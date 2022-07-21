@@ -17,21 +17,21 @@ public class StreamViewerController {
     StreamRepository streamRepository;
     ViewerRepository viewerRepository;
 
-    @GetMapping("/allviewers")
+    @GetMapping("/viewers")
     public List<Viewer> getAllViewers() {
         return viewerRepository.findAll();
     }
-    @GetMapping("/allstreams")
+    @GetMapping("/streams")
     public List<Stream> getAllStream() {
         return streamRepository.findAll();
     }
 
     @PostMapping("/createViewer")
-    public Viewer createViewer(Viewer viewer) {
+    Viewer createViewer(@RequestBody Viewer viewer) {
         return viewerRepository.save(viewer);
     }
     @PostMapping("/createStream")
-    public Stream createStream(Stream stream) {
+    Stream createStream(@RequestBody Stream stream) {
         return streamRepository.save(stream);
     }
     @DeleteMapping("/viewer/delete/{id}")
@@ -42,10 +42,10 @@ public class StreamViewerController {
     public void deleteStreamById(@PathVariable Long id) {
         streamRepository.deleteById(id);
     }
-    @PutMapping("{streamId}/viewers/{viewerId}")
-    Stream followToStream(@PathVariable Long streamId, @PathVariable Long viewerId) {
-        Stream stream = streamRepository.findById(streamId).get();
-        Viewer viewer = viewerRepository.findById(viewerId).get();
+    @PutMapping("/{streamid}/viewers/{viewerid}")
+    Stream followToStream(@PathVariable Long streamid, @PathVariable Long viewerid) {
+        Stream stream = streamRepository.findById(streamid).get();
+        Viewer viewer = viewerRepository.findById(viewerid).get();
         stream.addViewer(viewer);
         return streamRepository.save(stream);
 

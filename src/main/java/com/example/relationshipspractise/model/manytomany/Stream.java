@@ -19,7 +19,13 @@ public class Stream {
     private String name;
 
 
-    @ManyToMany(mappedBy = "followedStreams")
+    @ManyToMany
+    @JoinTable(name = "followedStreams",
+        joinColumns = @JoinColumn(name = "stream_id"),
+        inverseJoinColumns = @JoinColumn(name = "viewer_id")
+    )
+//    targetEntity = Viewer.class,
+//    cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH}
     private List<Viewer> viewerList = new ArrayList<>();
 
     public void addViewer(Viewer viewer) {
