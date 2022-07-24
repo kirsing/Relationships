@@ -12,7 +12,8 @@ import java.util.List;
 
 @Entity
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Viewer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
