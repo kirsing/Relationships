@@ -5,3 +5,6 @@ public class OwnerExeption extends RuntimeException{
         super(message);
     }
 }
+
+
+/// для каждой ентити свои кастомные исключения + обработчики, файнд бай айди
