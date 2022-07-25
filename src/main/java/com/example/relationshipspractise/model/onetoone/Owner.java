@@ -5,6 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +18,11 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String firstName;
-    private String lastName;
+    @NotBlank
+    private String firstName;  // @NotBlank — аннотированный элемент не должен быть null и должен содержать хотя бы один непробельный символ. Принимает CharSequence.
+
+    @NotEmpty
+    private String lastName;  // @NotBlank — аннотированный элемент не должен быть null и должен содержать хотя бы один cимвол.
 
     @OneToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")

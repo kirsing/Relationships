@@ -1,5 +1,6 @@
 package com.example.relationshipspractise.controller.onetoone;
 
+import com.example.relationshipspractise.exception.OwnerExeption;
 import com.example.relationshipspractise.model.onetoone.House;
 import com.example.relationshipspractise.model.onetoone.Owner;
 import com.example.relationshipspractise.model.onetoone.Pet;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Validated
@@ -26,7 +29,7 @@ public class OwnershipController {
     PetRepository petRepository;
 
     @PostMapping("/owner/create")
-    public String createOwner(@RequestBody Owner owner) {
+    public String createOwner(@Valid @RequestBody Owner owner) {
         ownerRepository.save(owner);
         return "Created an owner";
     }
@@ -54,7 +57,7 @@ public class OwnershipController {
     }
 
     @DeleteMapping("/owner/delete/{ownerId}")
-    public void deleteOwnerById(@PathVariable int ownerId) {
+    public void deleteOwnerById(@Min(30) @PathVariable int ownerId) {
         ownerRepository.deleteById(ownerId);
     }
     @DeleteMapping("/pet/delete/{petId}")
@@ -69,5 +72,9 @@ public class OwnershipController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
         return new ResponseEntity<>("not valid due to validation error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/owner/find/{ownerId}")
+    public Owner findOwnerById(@PathVariable int ownerId) throws Exception {
+        return ownerRepository.findById(ownerId).orElseThrow(()->new OwnerExeption("No such owner " + ownerId));
     }
 }
