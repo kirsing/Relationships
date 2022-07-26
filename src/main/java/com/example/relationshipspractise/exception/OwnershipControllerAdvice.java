@@ -27,7 +27,12 @@ public class OwnershipControllerAdvice {
         return errors;
     }
     @ExceptionHandler(OwnerExeption.class)
-    public ResponseEntity<?> handleOwnerExeption(OwnerExeption ex){
+    public ResponseEntity<?> handleOwnerException(OwnerExeption ex){
        return ResponseEntity.status(HttpStatus.OK).headers(new HttpHeaders()).body(ex.getMessage());
     }
+    @ExceptionHandler(HouseException.class)
+    public ResponseEntity<?> handleHouseException(HouseException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(new HttpHeaders()).body(ex.getMessage());
+    }
+
 }
